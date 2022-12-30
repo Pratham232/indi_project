@@ -98,3 +98,7 @@ select * from trainee;
 select * from batch;
 select * from question_management;
 select * from capture_feedback;
+
+
+
+/**/

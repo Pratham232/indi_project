@@ -99,7 +99,7 @@ insert into trainee values
 drop table if exists batch;
 create table batch(
 topic_name varchar(255),
-b_duration double, 
+b_duration float, 
 s_date date,
 e_date date,
 Trainer_id varchar(10),
@@ -114,21 +114,23 @@ insert into batch values
 ('Development','4200','2022-12-23','2023-03-12','A3','B4'),
 ('Advanced Java','1500','2022-12-26','2023-03-02','A1','B1');
 
+
+/*-----------Functions--------------*/
 drop function Calculate_Hours_of_Training;
 delimiter $$
 Create Function Calculate_Hours_of_Training
 (
-	hours double
+	hours float
 )
 returns int deterministic
 begin
-		return hours=(hours/60);
+		return (hours/60) ;
 end$$
 delimiter ;
 
 select Calculate_Hours_of_Training('b_duration');
 
-
+/*-----------------------------------------*/
 
 
 /*-----------------3rd table done---------------------*/
@@ -148,9 +150,9 @@ insert into question_management values
 ('Q2','Course Material','Have instructor provided proper course study material'),
 ('Q3','Learning Effectiveness','Are your all doubts being addressed and solved by the instructor'),
 ('Q4','Environment','How is the environment of the class'),
-('Q3','Learning Effectiveness','Are your all doubts being addressed and solved by the instructor'),
-('Q4','Environment','How is the environment of the class'),
-('Q5','Job Impact','How did the course help you in your job or project');
+('Q5','Learning Effectiveness','Are your all doubts being addressed and solved by the instructor'),
+('Q6','Environment','How is the environment of the class'),
+('Q7','Job Impact','How did the course help you in your job or project');
 
 
 
@@ -170,16 +172,31 @@ question_id varchar(10),
 foreign key (question_id) references question_management(q_id),
 question_section enum('Instructor','Course Material','Learning Effectiveness','Environment','Job Impact'),
 question_text varchar(255),
-rating enum('Strongly Disagree-1','Disagree-2','Neutral-3','Agree-4','Strongly Agree-5')
+rating varchar(10)
 );
 
 insert into capture_feedback values 
-('A1','B3','Core Java','Q1','Instructor','How does instructor communicate with the class','Agree-4'),
-('A1','B3','Core Java','Q2','Course Material','Have instructor provided proper course study material','Strongly Disagree-1'),
-('A1','B3','Core Java','Q3','Learning Effectiveness','Are your all doubts being addressed and solved by the instructor','Neutral-3'),
-('A1','B3','Core Java','Q4','Environment','How is the environment of the class','Disagree-2'),
-('A1','B3','Core Java','Q5','Job Impact','How did the course help you in your job or project','Strongly Agree-5');
+('A1','B3','Core Java','Q1','Instructor','How does instructor communicate with the class','4'),
+('A1','B3','Core Java','Q2','Course Material','Have instructor provided proper course study material','1'),
+('A1','B3','Core Java','Q3','Learning Effectiveness','Are your all doubts being addressed and solved by the instructor','3'),
+('A1','B3','Core Java','Q4','Environment','How is the environment of the class','2'),
+('A1','B3','Core Java','Q5','Job Impact','How did the course help you in your job or project','5');
 
 
 
 /*-----------------5th table done---------------------*/
+
+
+
+/*------------Stored Procedure-------------*/
+drop procedure if exists JoinsForReport;
+Delimiter //
+Create Procedure JoinsForReport()
+begin
+select trainer.t_name,capture_feedback.rating
+from trainer inner join capture_feedback
+on trainer.t_id=capture_feedback.trainers_id;
+end //
+delimiter ;
+
+call JoinsForReport();
