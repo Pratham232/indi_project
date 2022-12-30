@@ -2,6 +2,34 @@ drop database if exists pp;
 create database pp;
 use pp;
 
+/*----DQL----*/
+
+DROP USER if exists PS@Pratham;
+CREATE USER PS@Pratham IDENTIFIED BY 'admin';
+DROP USER IF EXISTS PP@'%';
+CREATE USER PP@'%' IDENTIFIED BY 'admin';
+
+SHOW GRANTS FOR PP@'%';
+
+GRANT ALL
+ON *.*   
+TO PS@'Pratham';
+
+SHOW GRANTS
+FOR PS@'Pratham';
+
+GRANT GRANT OPTION 
+ON *.* 
+TO PS@'Pratham';
+
+REVOKE ALL PRIVILEGES, GRANT OPTION 
+FROM PS@'Pratham';
+
+Show grants for PS@'Pratham';
+
+
+
+
 drop table if exists trainer;
 
 create table trainer(
@@ -12,11 +40,23 @@ t_qual enum('B.Tech','M.Tech','MCA','M.Sc.IT'),
 t_exp varchar(3)
 );
 
+/*TCL*/
+set autocommit=0;
+start transaction;
+savepoint sp1;
 insert into trainer values
 ('A1','Trainer1','Java','B.Tech','10'),
-('A2','Trainer2','dotnet','M.Tech','5'),
+('A2','Trainer2','dotnet','M.Tech','5');
+savepoint sp2;
+insert into trainer values
 ('A3','Trainer3','mainframe','MCA','8'),
 ('A4','Trainer4','testing','M.Sc.IT','2');
+rollback to sp2;
+insert into trainer values
+('A3','Trainer3','mainframe','MCA','8'),
+('A4','Trainer4','testing','M.Sc.IT','2');
+commit;
+set autocommit=1;
 
 update trainer set t_exp='6' where t_id='A2';
 delete from trainer where t_id='A2';
@@ -59,7 +99,7 @@ insert into trainee values
 drop table if exists batch;
 create table batch(
 topic_name varchar(255),
-b_duration int, 
+b_duration double, 
 s_date date,
 e_date date,
 Trainer_id varchar(10),
@@ -74,7 +114,19 @@ insert into batch values
 ('Development','4200','2022-12-23','2023-03-12','A3','B4'),
 ('Advanced Java','1500','2022-12-26','2023-03-02','A1','B1');
 
+drop function Calculate_Hours_of_Training;
+delimiter $$
+Create Function Calculate_Hours_of_Training
+(
+	hours double
+)
+returns int deterministic
+begin
+		return hours=(hours/60);
+end$$
+delimiter ;
 
+select Calculate_Hours_of_Training('b_duration');
 
 
 
