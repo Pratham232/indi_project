@@ -40,6 +40,15 @@ t_qual enum('B.Tech','M.Tech','MCA','M.Sc.IT'),
 t_exp varchar(3)
 );
 
+delimiter $$
+CREATE TRIGGER t1    
+	BEFORE INSERT 
+         ON trainer FOR EACH ROW    
+         BEGIN    
+        select 'please enter the values';
+        END;   
+delimiter ;
+
 /*TCL*/
 set autocommit=0;
 start transaction;
@@ -124,11 +133,11 @@ Create Function Calculate_Hours_of_Training
 )
 returns int deterministic
 begin
-		return (hours/60) ;
+		hours=select 
 end$$
 delimiter ;
 
-select Calculate_Hours_of_Training('b_duration');
+select Calculate_Hours_of_Training('hours');
 
 /*-----------------------------------------*/
 

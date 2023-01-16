@@ -5,54 +5,52 @@ use pp;
 /*This is the DDL statements -----Creation of the tables----------*/
 
 create table trainer(
-t_id varchar(10) PRIMARY KEY,
-t_name varchar(255),
-t_track enum('Java','dotnet','mainframe','testing'),
-t_qual varchar(255),
-t_exp varchar(3)
+trainer_id varchar(10) PRIMARY KEY,
+trainer_name varchar(255),
+trainer_track enum('Java','dotnet','mainframe','testing'),
+trainer_qual varchar(255),
+trainer_exp varchar(3)
 );
 
 create table trainee(
-te_id varchar(10) PRIMARY KEY,
-te_name varchar(255),
-te_track enum('Java','dotnet','mainframe','testing'),
-te_qual varchar(255),
-te_exp varchar(3)
+trainee_id varchar(10) PRIMARY KEY,
+trainee_name varchar(255),
+trainee_track enum('Java','dotnet','mainframe','testing'),
+trainee_qual varchar(255),
+trainee_exp varchar(3)
 );
 
 
 create table batch(
 topic_name varchar(255),
-b_duration integer, 
-s_date date,
-e_date date,
-Trainer_id varchar(10),
+batch_duration integer, 
+start_date date,
+end_date date,
+trainer_id varchar(10),
 FOREIGN KEY (Trainer_id) REFERENCES trainer(t_id),
-Trainee_id varchar(10),
+trainee_id varchar(10),
 FOREIGN KEY (Trainee_id) REFERENCES trainee(te_id)
 );
 
 
 
 create table question_management(
-q_id varchar(10) primary key,
-q_section enum('Instructor','Course Material','Learning Effectiveness','Environment','Job Impact'),
-q_text varchar(300)
+question_id varchar(10) primary key,
+question_section enum('Instructor','Course Material','Learning Effectiveness','Environment','Job Impact'),
+question_text varchar(300)
 );
 
 
 
 create table capture_feedback(
-trainers_id varchar(10),
-FOREIGN KEY (trainers_id) REFERENCES trainer(t_id),
-trainees_id varchar(10),
-FOREIGN KEY (trainees_id) REFERENCES trainee(te_id),
-topics_name varchar(255),
+trainer_id varchar(10),
+FOREIGN KEY (trainers_id) REFERENCES trainer(trainer_id),
+trainee_id varchar(10),
+FOREIGN KEY (trainees_id) REFERENCES trainee(trainee_id),
+topic_name varchar(255),
 question_id varchar(10),
-foreign key (question_id) references question_management(q_id),
-question_section enum('Instructor','Course Material','Learning Effectiveness','Environment','Job Impact'),
-question_text varchar(255),
-rating enum('Strong Disagree-1','Disagree-2','Neutral-3','Agree-4','Strongly Agree-5')
+foreign key (question_id) references question_management(question_id),
+rating int
 );
 
 
@@ -84,11 +82,11 @@ insert into question_management values
 ('Q5','Job Impact','How did the course help you in your job or project');
 
 insert into capture_feedback values 
-('A1','B3','Core Java','Q1','Instructor','How does instructor communicate with the class','Agree-4'),
-('A1','B3','Core Java','Q2','Course Material','Have instructor provided proper course study material','Strongly Disagree-1'),
-('A1','B3','Core Java','Q3','Learning Effectiveness','Are your all doubts being addressed and solved by the instructor','Neutral-3'),
-('A1','B3','Core Java','Q4','Environment','How is the environment of the class','Disagree-2'),
-('A1','B3','Core Java','Q5','Job Impact','How did the course help you in your job or project','Strongly Agree-5');
+('A1','B3','Core Java','Q1','Instructor','How does instructor communicate with the class','4'),
+('A1','B3','Core Java','Q2','Course Material','Have instructor provided proper course study material','1'),
+('A1','B3','Core Java','Q3','Learning Effectiveness','Are your all doubts being addressed and solved by the instructor','3'),
+('A1','B3','Core Java','Q4','Environment','How is the environment of the class','2'),
+('A1','B3','Core Java','Q5','Job Impact','How did the course help you in your job or project','5');
 
 
 /*This is the DQL Statements----------------displaying the table----------------*/
