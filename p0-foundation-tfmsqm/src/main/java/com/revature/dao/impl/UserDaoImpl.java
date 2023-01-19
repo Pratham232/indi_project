@@ -1,4 +1,5 @@
 package com.revature.dao.impl;
+import com.poms.config.DatabaseConnection;
 import com.revature.dao.UserDao;
 import com.revature.menu.QuestionOperationsMenu;
 import com.revature.model.User;
@@ -20,17 +21,10 @@ public class UserDaoImpl implements UserDao {
 		QuestionOperationsMenu pp=new QuestionOperationsMenu();
 		Scanner s=new Scanner(System.in);
 		User u=new User();
-		System.out.print("\nEnter the Username:");
-		userid=s.nextLine();
-		System.out.print("\nEnter the Password:");
-		password=s.nextLine();	
 		Connection con = null;
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			//System.out.println("Driver loaded");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pp", "root", "admin");
-			//System.out.println("Connection Established");
+		con = DatabaseConnection.getConnection();
 
+		try {
 			System.out.print("\nPlease enter userId from the table:");
 			userid = s.nextLine();
 
@@ -40,7 +34,7 @@ public class UserDaoImpl implements UserDao {
 			java.sql.Statement stm = con.createStatement();
 			ResultSet rs = stm.executeQuery("SELECT * FROM User");
 			if (rs.next()) {
-				if (userid.equals(rs.getString(1)) && password.equals(rs.getString(2))) {
+				if (userid.equals(rs.getString(1)) && password.equals(rs.getString(2))&& rs.getString(3).equals("Admin")) {
 					QuestionOperationsMenu.menuAppForQuestion();
 				} else {
 					System.err.println("\tInvalid userid or password");
@@ -49,7 +43,7 @@ public class UserDaoImpl implements UserDao {
 				System.err.println("\tInvalid userid or password");
 			}
 
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			System.out.println("Exception" + e.getMessage());
 		}
 		try {
@@ -60,27 +54,57 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void DisplayUser() {
-		Connection con=null;
+		Connection con = null;
+		con = DatabaseConnection.getConnection();
+		
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			//System.out.println("Driver Loaded");
-			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/pp","root","admin");
-			//System.out.println("Connection Established");
+			
 			java.sql.Statement stm = con.createStatement();
 			ResultSet rs = stm.executeQuery("SELECT * FROM User");
 			while(rs.next()) {
+				User uu=new User();
 				String username=rs.getString("username");
+				uu.setUsername(rs.getString("username"));
 				String password=rs.getString("password");
 				System.out.println("\n"+username+" "+password);
 			}
 			
-		}catch(ClassNotFoundException | SQLException e ){
+		}catch(SQLException e ){
 			System.out.println(e.getMessage());
 		}
 		try {
 			con.close();
 		} 
 		catch (SQLException e) {}
+		
+	}
+
+	@Override
+	public User getUserForTest(User uu) {
+		Connection con = null;
+		con = DatabaseConnection.getConnection();
+		try {
+			
+			java.sql.Statement stm = con.createStatement();
+			ResultSet rs = stm.executeQuery("SELECT * FROM User");
+			while(rs.next()) {
+				
+				if (uu.getUsername().equals(rs.getString(1)) && uu.getPassword().equals(rs.getString(2))){
+				uu.setUsername(rs.getString(1));
+				uu.setPassword(rs.getString(2));
+				uu.setRole(rs.getString(3));
+				}
+				
+			}
+			
+		}catch(SQLException e ){
+			System.out.println(e.getMessage());
+		}
+		try {
+			con.close();
+		}catch (SQLException e) {}
+		
+		return uu;
 		
 	}
 }

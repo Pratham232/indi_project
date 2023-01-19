@@ -4,7 +4,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import org.apache.log4j.Logger;
+
+import com.revature.menu.UserAuthentication;
+
 public class TimeZoneConversion {
+	private static final Logger logger = Logger.getLogger(UserAuthentication.class);
+
 	public static String formatDateToString(Date date, String format,
 			String timeZone) {
 		if (date == null) return null;
@@ -18,10 +24,10 @@ public class TimeZoneConversion {
 
 	public static void main(String[] args) {
 		Date date = new Date();
-		System.out.println("Default Date:"+date.toString());
-		System.out.println("System Date: "+formatDateToString(date, "dd MMM yyyy hh:mm:ss a", null));
-		System.out.println("System Date in IST: "+formatDateToString(date, "dd MMM yyyy hh:mm:ss a", "IST"));
-		System.out.println("System Date in UTC: "+formatDateToString(date, "dd MMM yyyy hh:mm:ss a", "UTC"));
+		logger.info("\nDefault Date:"+date.toString());
+		logger.info("\nSystem Date: "+formatDateToString(date, "dd MMM yyyy hh:mm:ss a", null));
+		logger.info("\nSystem Date in IST: "+formatDateToString(date, "dd MMM yyyy hh:mm:ss a", "IST"));
+		logger.info("\nSystem Date in UTC: "+formatDateToString(date, "dd MMM yyyy hh:mm:ss a", "UTC"));
 	}
 	
 

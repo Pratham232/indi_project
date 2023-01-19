@@ -1,16 +1,14 @@
 package com.revature.model;
 
-import com.revature.util.QuestionsSection;
-
 public class QuestionManagement {
 	String questionId;
-	QuestionsSection questionSection;
+	String questionSection;
 	String questionText;
 	
 	
 	public QuestionManagement() {
 	}
-	public QuestionManagement(String questionId, QuestionsSection questionSection, String questionText) {
+	public QuestionManagement(String questionId, String questionSection, String questionText) {
 		this.questionId = questionId;
 		this.questionSection = questionSection;
 		this.questionText = questionText;
@@ -21,10 +19,10 @@ public class QuestionManagement {
 	public void setQuestion_id(String questionId) {
 		this.questionId = questionId;
 	}
-	public QuestionsSection getQuestionSection() {
+	public String getQuestionSection() {
 		return questionSection;
 	}
-	public void setQuestionSection(QuestionsSection questionSection) {
+	public void setQuestionSection(String questionSection) {
 		this.questionSection = questionSection;
 	}
 	public String getQuestionText() {

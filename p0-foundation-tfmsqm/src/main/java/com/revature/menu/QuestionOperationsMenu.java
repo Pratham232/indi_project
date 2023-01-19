@@ -2,10 +2,13 @@ package com.revature.menu;
 
 import java.util.Scanner;
 
-import com.revature.dao.impl.QuestionManagementService;
+import org.apache.log4j.Logger;
+
+import com.revature.dao.impl.QuestionManagementDaoImpl;
 
 public class QuestionOperationsMenu 
-{
+{	private static final Logger logger = Logger.getLogger(UserAuthentication.class);
+
 	public static void main(String[] args) 
 	{
 		menuAppForQuestion();
@@ -16,10 +19,10 @@ public class QuestionOperationsMenu
 		int choice=0;
 		int choices=0;
 		Scanner sc=new Scanner(System.in);
-		QuestionManagementService qms=new QuestionManagementService();
+		QuestionManagementDaoImpl qms=new QuestionManagementDaoImpl();
 		do {
-			System.out.println("\n!!!!!!!!!!!!!!!Question Operation Menu!!!!!!!!!!!!!!!");
-			System.out.print("1.Add Questions\n2.Display Questions\nEnter you choice here:");
+			logger.info("\n!!!!!!!!!!!!!!!Question Operation Menu!!!!!!!!!!!!!!!");
+			logger.info("\n1.Add Questions\n2.Display Questions\nEnter you choice here:");
 			choices=sc.nextInt();
 			sc.nextLine();
 			switch(choices) 
@@ -30,14 +33,14 @@ public class QuestionOperationsMenu
 					break;
 				
 				default:
-					System.out.println("!!!!!!!!!!!!!Please enter the valid option!!!!!!!!!!!!!!!");
+					logger.info("\n!!!!!!!!!!!!!Please enter the valid option!!!!!!!!!!!!!!!");
 			}
 			
-			System.out.print("\n!!!!!!!!!!!!!Question Menu Page!!!!!!!!!!!\n\nPress 1 to continue to go back to menu\nPress 0 to exit this page\nEnter your choice here:");
+			logger.info("\n!!!!!!!!!!!!!Question Menu Page!!!!!!!!!!!\n\nPress 1 to continue to go back to menu\nPress 0 to exit this page\nEnter your choice here:");
 			choice=sc.nextInt();
 			sc.nextLine();
 			} while (choice==1);
-		System.out.print("\n\n!!!!!!!!!!!!Outside the Question Operations!!!!!!!!!!!!!!");
+		logger.info("\n\n!!!!!!!!!!!!Outside the Question Operations!!!!!!!!!!!!!!");
 	}
 }
 

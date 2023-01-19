@@ -1,11 +1,9 @@
 com\revature\dao\impl\QuestionManagementService.class
-com\revature\model\TreeSetClass.class
+com\revature\util\Addition.class
 com\poms\config\DatabaseConnection.class
-com\revature\model\TreeSetClass$1.class
 com\revature\dao\impl\UserDaoImpl.class
 com\revature\util\TimeZoneConversion.class
 com\revature\service\UserService.class
-com\revature\util\QuestionsSection.class
 com\revature\dao\UserDao.class
 com\revature\menu\UserAuthentication.class
 com\revature\util\CurrencyConversion.class

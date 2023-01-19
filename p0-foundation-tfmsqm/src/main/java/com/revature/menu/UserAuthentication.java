@@ -3,31 +3,25 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Scanner;
-import com.revature.dao.impl.UserDaoImpl;
-//User Implementation
-public class UserAuthentication extends UserDaoImpl{
 
+import org.apache.log4j.Logger;
+
+import com.poms.config.DatabaseConnection;
+import com.revature.dao.impl.UserDaoImpl;
+
+public class UserAuthentication extends UserDaoImpl{
+	private static final Logger logger = Logger.getLogger(UserAuthentication.class);
 	public static void main(String[] args) {
-		
 		Connection con=null;
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			//System.out.println("Driver Loaded");
-			con=DriverManager.getConnection("jdbc:mysql://localhost:3306/pp","root","admin");
-			//System.out.println("Connection Established");
-			
-		}catch(ClassNotFoundException | SQLException e ){
-			System.out.println(e.getMessage());
-			
-		}
-		
+		con = DatabaseConnection.getConnection();
 		UserAuthentication ua=new UserAuthentication();
 		int choice=0;
 		Scanner s=new Scanner(System.in);
 		do {
 			int c=0;
-			System.out.print("!!!!!!!!!!!!User Authentication!!!!!!!!!!!!!");
-			System.out.print("\nEnter choice\n1.Sign In \n2.Display\nEnter your choice:");
+
+			logger.info("\n!!!!!!!!!!!!User Authentication!!!!!!!!!!!!!");
+			logger.info("\nEnter choice\n1.Sign In \n2.Display\nEnter your choice:");
 			c=s.nextInt();
 			s.nextLine();
 			switch(c)
@@ -37,7 +31,7 @@ public class UserAuthentication extends UserDaoImpl{
 			case 2:ua.DisplayUser();
 				break;
 			}
-			System.out.print("\n\nUser Authentication Page\nPress 1 to continue\nPress 0 to terminate the program\nEnter your choice:");
+			logger.info("\n\nUser Authentication Page\nPress 1 to continue\nPress 0 to terminate the program\nEnter your choice:");
 			choice=s.nextInt();
 			s.nextLine();
 		} while (choice==1);
@@ -48,6 +42,6 @@ public class UserAuthentication extends UserDaoImpl{
 			
 		}
 		
-		System.out.println("*********Log in program Terminated********");
+		logger.info("\n*********Log in program Terminated********");
 	}
 }

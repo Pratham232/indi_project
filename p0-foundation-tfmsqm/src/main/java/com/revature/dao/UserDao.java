@@ -8,4 +8,7 @@ public interface UserDao {
 	static List<User>UserInfo=new ArrayList<>();
 	public void getUser();
 	public void DisplayUser();
+	public User getUserForTest(User uu);
+	
+	
 }
