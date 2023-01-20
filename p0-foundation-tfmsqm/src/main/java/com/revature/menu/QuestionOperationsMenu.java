@@ -29,7 +29,7 @@ public class QuestionOperationsMenu
 			{
 				case 1:	qms.getUserInput();
 					break;
-				case 2: qms.displayQuestionDetails();
+				case 2: qms.displayQuestionDetails() ;
 					break;
 				
 				default:

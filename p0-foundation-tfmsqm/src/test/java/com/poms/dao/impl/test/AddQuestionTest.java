@@ -12,7 +12,7 @@ public class AddQuestionTest {
 	
 	@Test
 	public void Test() {
-		QuestionManagement qtobeInserted=new QuestionManagement("Q9","Course Material","Admin");
+		QuestionManagement qtobeInserted=new QuestionManagement("Q10","Course Material","Admin");
 		QuestionManagement qinserted=null;
 	
 		try {
